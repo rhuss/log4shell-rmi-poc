@@ -1,4 +1,5 @@
 #!/bin/sh
+cp web/index.html.orig web/index.html
 ./mvnw clean package
 if [ $? -eq 0 ]; then
     echo "Staring Vulnerable Service"

