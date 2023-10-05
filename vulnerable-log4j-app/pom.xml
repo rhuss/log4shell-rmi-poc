@@ -13,7 +13,7 @@
 	<artifactId>vulnerable-log4j-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>vulnerabel_log4j_app</name>
+	<name>vulnerable-log4j-app</name>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
