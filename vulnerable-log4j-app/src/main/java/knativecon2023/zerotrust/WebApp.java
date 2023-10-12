@@ -37,7 +37,7 @@ public class WebApp extends HandlerInterceptorAdapter implements WebMvcConfigure
         registry.addInterceptor(this);
     }
 
-    // Add resource handler so that static files are not chached by the browser
+    // Add resource handler so that static files are not cached by the browser
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
