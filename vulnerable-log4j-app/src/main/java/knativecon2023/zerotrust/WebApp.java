@@ -1,29 +1,49 @@
 package knativecon2023.zerotrust;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.CacheControl;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-@RestController
 @SpringBootApplication
-public class WebApp {
+public class WebApp extends HandlerInterceptorAdapter implements WebMvcConfigurer {
 
     public static final Logger logger = LogManager.getLogger(WebApp.class);
 
-    // Demo handler, could be any handler that would log user provided input.
-    @GetMapping(value = "/hello")
-    public String hello(@RequestHeader("User-agent") String useragent) {
-        // Innocent log statement that triggers the exploit
-        logger.info("Received User-agent " + useragent);
-        return "Hello\n";
+    public static void main(String[] args) {
+        SpringApplication.run(WebApp.class, args);
     }
 
-    public static void main(String[] args) {
-		SpringApplication.run(WebApp.class, args);
-	}
+    // Interceptor used for logging HTTP access:
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+         // Innocent log statement that might trigger the exploit with a carefully prepared user agent header
+        logger.info("User-agent: " + request.getHeader("User-Agent"));
+        logger.info("Request: " + request.getRequestURI());
+        return true;
+    }
+
+    // Add the interceptor for logging the requests
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(this);
+    }
+
+    // Add resource handler so that static files are not chached by the browser
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/")
+                .setCacheControl(CacheControl.noCache());
+    }
+
 
 }

