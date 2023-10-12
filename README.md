@@ -75,7 +75,7 @@ The website gets updated with the data provided from malicious RMI server that h
 open http://localhost:8080
 ```
 
-(or just shift-reload in your browser). The hacked website is returned.
+(or just reload the previous page in your browser). The hacked website is returned.
 
 ## References 
 
